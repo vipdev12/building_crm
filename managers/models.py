@@ -3,7 +3,7 @@ from django.db import models
 
 # Create your models here.
 class Manager(models.Model):
-    name = models.CharField(max_length=100, verbose_name='ФИО')
+    full_name = models.CharField(max_length=100, verbose_name='ФИО')
     phone_number = models.CharField(max_length=100, verbose_name='Телефон')
     email = models.EmailField(verbose_name='Почта')
     date = models.DateField(auto_now_add=True, verbose_name='Дата создания')

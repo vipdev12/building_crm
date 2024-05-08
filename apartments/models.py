@@ -4,19 +4,22 @@ from django.db import models
 
 
 class Apartment(models.Model):
-    number = models.IntegerField(verbose_name='№ квартиры')
-    category = models.CharField(max_length=20, verbose_name='Объект')
-    floor = models.IntegerField(verbose_name='Этаж')
-    square = models.CharField(max_length=100, verbose_name='КВ')
-    date = models.DateField(auto_now_add=True, verbose_name='Дата')
-    status = models.CharField(max_length=100, verbose_name='Статус')
-    price = models.CharField(max_length=100, verbose_name='Цена')
-    client = models.CharField(max_length=100, null=True, blank=True, default='-', verbose_name='Клиент')
-    status = models.CharField(max_length=100, default='-', null=True, blank=True, verbose_name='Статус')
-    client_number = models.CharField(max_length=100, null=True, blank=True, default='-', verbose_name='Номер клиента')
-    contract_number = models.IntegerField(verbose_name='№ Договора', null=True, blank=True)
+    STATUS_CHOICES = (
+        ('активно', 'Активно'),
+        ('бронь', 'Бронь'),
+        ('куплено', 'Куплено'),
+        ('рассрочка', 'Рассрочка'),
+        ('бартер', 'Бартер'),
+    )
+
+    floor = models.PositiveIntegerField()
+    object_name = models.CharField(max_length=100, null=True, blank=True)
+    square_meters = models.FloatField(null=True, blank=True)
+    date = models.DateField(auto_now=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='активно')
+    client_name = models.CharField(max_length=40, default='-')
+    client_number = models.CharField(max_length=30, default='-')
 
     def __str__(self):
-        return f'№ {str(self.number)}'
-
-
+        return f"{self.object_name} - Floor {self.floor}"
