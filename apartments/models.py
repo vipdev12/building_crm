@@ -1,5 +1,5 @@
 from django.db import models
-
+from config import validators
 # Create your models here.
 
 
@@ -12,11 +12,11 @@ class Apartment(models.Model):
         ('бартер', 'Бартер'),
     )
 
-    floor = models.PositiveIntegerField()
+    floor = models.PositiveIntegerField(max_length=3)
     object_name = models.CharField(max_length=100, null=True, blank=True)
     square_meters = models.FloatField(null=True, blank=True)
     date = models.DateField(auto_now=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2, validators=[validators.validate_positive])
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='активно')
     client_name = models.CharField(max_length=40, default='-')
     client_number = models.CharField(max_length=30, default='-')
